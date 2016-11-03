@@ -370,17 +370,12 @@ static CGFloat const ATLButtonHeight = 28.0f;
 
 - (void)configureRightAccessoryButtonState
 {
-    if (self.textInputView.text.length) {
-        [self configureRightAccessoryButtonForText];
+    if (self.displaysRightAccessoryImage) {
+        [self configureRightAccessoryButtonForImage];
         self.rightAccessoryButton.enabled = YES;
     } else {
-        if (self.displaysRightAccessoryImage) {
-            [self configureRightAccessoryButtonForImage];
-            self.rightAccessoryButton.enabled = YES;
-        } else {
-            [self configureRightAccessoryButtonForText];
-            self.rightAccessoryButton.enabled = NO;
-        }
+        [self configureRightAccessoryButtonForText];
+        self.rightAccessoryButton.enabled = NO;
     }
 }
 
