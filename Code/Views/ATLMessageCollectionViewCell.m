@@ -107,7 +107,8 @@ NSInteger const kATLSharedCellTag = 1000;
 
 - (void)presentMessage:(LYRMessage *)message
 {
-    self.message = message;
+    [super presentMessage:message];
+    
     LYRMessagePart *messagePart = message.parts.firstObject;
     [self updateBubbleWidth:[[self class] cellSizeForMessage:self.message inView:nil].width];
     if ([self messageContainsTextContent]) {
