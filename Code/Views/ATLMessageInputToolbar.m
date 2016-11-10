@@ -32,6 +32,7 @@ NSString *const ATLMessageInputToolbarDidChangeHeightNotification = @"ATLMessage
 @property (nonatomic) CGFloat textViewMaxHeight;
 @property (nonatomic) CGFloat buttonCenterY;
 @property (nonatomic) BOOL firstAppearance;
+@property (nonatomic) BOOL customUI;
 
 @end
 
@@ -106,9 +107,20 @@ static CGFloat const ATLButtonHeight = 28.0f;
     return self;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        self.customUI = YES;
+    }
+    return self;
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    
+    if (self.customUI) return;
     
     if (self.firstAppearance) {
         [self configureRightAccessoryButtonState];
@@ -271,12 +283,12 @@ static CGFloat const ATLButtonHeight = 28.0f;
 
 #pragma mark - Actions
 
-- (void)leftAccessoryButtonTapped
+- (IBAction)leftAccessoryButtonTapped:(id)sender
 {
     [self.inputToolBarDelegate messageInputToolbar:self didTapLeftAccessoryButton:self.leftAccessoryButton];
 }
 
-- (void)rightAccessoryButtonTapped
+- (IBAction)rightAccessoryButtonTapped:(id)sender
 {
     [self acceptAutoCorrectionSuggestion];
     if ([self.inputToolBarDelegate respondsToSelector:@selector(messageInputToolbarDidEndTyping:)]) {
@@ -370,6 +382,8 @@ static CGFloat const ATLButtonHeight = 28.0f;
 
 - (void)configureRightAccessoryButtonState
 {
+    if (self.customUI) return;
+
     if (self.textInputView.text.length) {
         [self configureRightAccessoryButtonForText];
         self.rightAccessoryButton.enabled = YES;

@@ -94,12 +94,12 @@ extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
  @abstract The left accessory button for the view. 
  @discussion By default, the button displays a camera icon. If set to `nil` the `textInputView` will expand to the left edge of the toolbar.
  */
-@property (nonatomic) UIButton * _Nullable leftAccessoryButton;
+@property (nonatomic) IBOutlet UIButton *leftAccessoryButton;
  
 /**
  @abstract The right accessory button for the view.
  */
-@property (nonatomic) UIButton *rightAccessoryButton;
+@property (nonatomic) IBOutlet UIButton *rightAccessoryButton;
 
 /**
  @abstract The right accessory button title.
@@ -144,7 +144,7 @@ extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
 /**
  @abstract An automatically resizing message composition field.
  */
-@property (nonatomic) ATLMessageComposeTextView *textInputView;
+@property (nonatomic) IBOutlet ATLMessageComposeTextView *textInputView;
 
 /**
   @abstract The margin on top and bottom of the textInputView.
@@ -170,6 +170,16 @@ extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
  @discussion Any existing media attachments will be removed when the right accessory button is tapped.
  */
 @property (nonatomic, readonly, nullable) NSArray <ATLMediaAttachment*> *mediaAttachments;
+
+/**
+ @abstract The method called when the leftAccessoryButton is tapped.
+ */
+- (IBAction)leftAccessoryButtonTapped:(id)sender;
+
+/**
+ @abstract The method called when the rightAccessoryButton is tapped.
+ */
+- (IBAction)rightAccessoryButtonTapped:(id)sender;
 
 //-------------------
 // Layout Accessories
