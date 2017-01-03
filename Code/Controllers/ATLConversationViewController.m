@@ -36,7 +36,6 @@
 
 @interface ATLConversationViewController () <UICollectionViewDataSource, UICollectionViewDelegate, CLLocationManagerDelegate>
 
-@property (nonatomic) ATLConversationDataSource *conversationDataSource;
 @property (nonatomic, readwrite) LYRQueryController *queryController;
 @property (nonatomic) BOOL shouldDisplayAvatarItem;
 @property (nonatomic) NSMutableOrderedSet *typingParticipantIDs;
@@ -111,6 +110,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 {
     _dateDisplayTimeInterval = 60*60;
     _marksMessagesAsRead = YES;
+    _shouldDisplayUsernameForOneOtherParticipant = NO;
     _shouldDisplayAvatarItemForOneOtherParticipant = NO;
     _shouldDisplayAvatarItemForAuthenticatedUser = NO;
     _avatarItemDisplayFrequency = ATLAvatarItemDisplayFrequencySection;
@@ -119,16 +119,6 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     _sectionFooters = [NSHashTable weakObjectsHashTable];
     _objectChanges = [NSMutableArray new];
     _animationQueue = dispatch_queue_create("com.atlas.animationQueue", DISPATCH_QUEUE_SERIAL);
-}
-
-- (void)loadView
-{
-    [super loadView];
-    // Collection View Setup
-    self.collectionView = [[ATLConversationCollectionView alloc] initWithFrame:CGRectZero
-                                                          collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
 }
 
 - (void)setLayerClient:(LYRClient *)layerClient
@@ -143,6 +133,12 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 
 - (void)viewDidLoad
 {
+    // Collection View Setup
+    self.collectionView = [[ATLConversationCollectionView alloc] initWithFrame:CGRectZero
+                                                          collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+    self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
+    
     [super viewDidLoad];
     
     [self configureControllerForConversation];
@@ -520,7 +516,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 
 - (BOOL)shouldDisplaySenderLabelForSection:(NSUInteger)section
 {
-    if (self.conversation.participants.count <= 2) return NO;
+    if (!self.shouldDisplayUsernameForOneOtherParticipant && self.conversation.participants.count <= 2) return NO;
     
     LYRMessage *message = [self.conversationDataSource messageAtCollectionViewSection:section];
     if ([message.sender.userID isEqualToString:self.layerClient.authenticatedUser.userID]) return NO;
