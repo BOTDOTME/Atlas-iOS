@@ -189,8 +189,6 @@ NSString *const ATLAvatarImageViewAccessibilityLabel = @"ATLAvatarImageViewAcces
         return;
     }
     
-    NSLog(@"updateWithImage %p : %@ : %@", self, image, remoteImageURL.absoluteString);
-    
     [UIView animateWithDuration:0.2 animations:^{
         self.alpha = 0.0;
     } completion:^(BOOL finished) {
