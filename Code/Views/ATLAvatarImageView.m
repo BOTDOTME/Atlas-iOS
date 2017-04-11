@@ -188,6 +188,7 @@ NSString *const ATLAvatarImageViewAccessibilityLabel = @"ATLAvatarImageViewAcces
     if (self.remoteImageURL.absoluteString == remoteImageURL.absoluteString) {
         return;
     }
+    self.remoteImageURL = remoteImageURL;
     
     [UIView animateWithDuration:0.2 animations:^{
         self.alpha = 0.0;
