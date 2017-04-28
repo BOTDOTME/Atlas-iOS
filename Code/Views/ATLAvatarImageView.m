@@ -108,21 +108,30 @@ NSString *const ATLAvatarImageViewAccessibilityLabel = @"ATLAvatarImageViewAcces
     [self.downloadTask cancel];
 }
 
+- (void)setImage:(UIImage *)image
+{
+    super.image = image;
+    
+    if (image)
+    {
+        self.initialsLabel.text = nil;
+    }
+}
+
 - (void)setAvatarItem:(id<ATLAvatarItem>)avatarItem
 {
     self.image = nil;
     
-    if ([avatarItem avatarImageURL]) {
-        self.initialsLabel.text = nil;
+    if (avatarItem.avatarInitials) {
+        self.initialsLabel.text = avatarItem.avatarInitials;
+    }
+    
+    if (avatarItem.avatarImageURL) {
         [self loadAvatarImageWithURL:[avatarItem avatarImageURL]];
     } else if (avatarItem.avatarImage) {
-        self.initialsLabel.text = nil;
         self.image = avatarItem.avatarImage;
     }
     
-    if (self.image == nil && avatarItem.avatarInitials) {
-        self.initialsLabel.text = avatarItem.avatarInitials;
-    }
     _avatarItem = avatarItem;
 }
 
@@ -197,7 +206,6 @@ NSString *const ATLAvatarImageViewAccessibilityLabel = @"ATLAvatarImageViewAcces
         self.alpha = 0.0;
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.5 animations:^{
-            self.initialsLabel.text = nil;
             self.image = image;
             self.alpha = 1.0;
         }];
