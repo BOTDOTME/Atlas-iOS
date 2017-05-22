@@ -26,7 +26,7 @@
 #import "ATLAvatarView.h"
 
 NS_ASSUME_NONNULL_BEGIN
-extern CGFloat const ATLMessageCellHorizontalMargin;
+extern CGFloat ATLMessageCellHorizontalMargin;
 extern NSString *const ATLGIFAccessibilityLabel;
 extern NSString *const ATLImageAccessibilityLabel;
 extern NSString *const ATLVideoAccessibilityLabel;
