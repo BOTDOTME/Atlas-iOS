@@ -18,7 +18,9 @@ typedef NS_ENUM(NSInteger, ATLCellType) {
     ATLIncomingCellType,
 };
 
-extern CGFloat const ATLMessageCellHorizontalMargin;
+extern CGFloat ATLMessageCellHorizontalMargin;
+extern CGFloat ATLAvatarImageLeadPadding;
+extern CGFloat ATLAvatarImageTailPadding;
 
 /**
  @abstract The `ATLBaseCollectionViewCell` provides for building custom UI on top of a basic Atlas 'Bubble Cell'.

@@ -107,7 +107,8 @@ NSInteger const kATLSharedCellTag = 1000;
 
 - (void)presentMessage:(LYRMessage *)message
 {
-    self.message = message;
+    [super presentMessage:message];
+    
     LYRMessagePart *messagePart = message.parts.firstObject;
     [self updateBubbleWidth:[[self class] cellSizeForMessage:self.message inView:nil].width];
     if ([self messageContainsTextContent]) {
@@ -459,6 +460,9 @@ NSInteger const kATLSharedCellTag = 1000;
         if (!imagePart) {
             // If no preview image part found, resort to the full-resolution image.
             imagePart = ATLMessagePartForMIMEType(message, ATLMIMETypeImageJPEG);
+            if (!imagePart) {
+                imagePart = ATLMessagePartForMIMEType(message, ATLMIMETypeImagePNG);
+            }
         }
         // Resort to image's size, if no dimensions metadata message parts found.
         if ((imagePart.transferStatus == LYRContentTransferComplete) ||
