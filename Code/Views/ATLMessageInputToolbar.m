@@ -121,7 +121,11 @@ static CGFloat const ATLButtonHeight = 28.0f;
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
+
+    [self bringSubviewToFront:self.leftAccessoryButton];
+    [self bringSubviewToFront:self.textInputView];
+    [self bringSubviewToFront:self.rightAccessoryButton];
+
     if (self.customUI) return;
     
     if (self.firstAppearance) {
